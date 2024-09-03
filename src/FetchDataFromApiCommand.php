@@ -10,7 +10,7 @@ class FetchDataFromApiCommand extends Command
     protected $signature = 'dashboard:fetch-data-from-gitlab-api';
     protected $description = 'Fetch data for GitLab tile';
 
-    protected $specificUsers = ['tomcoonen', 'gertvanhout', 'danielsandzand', 'julianachiabai'];
+    protected $specificUsers = [];
 
     public function handle()
     {
