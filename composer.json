@@ -1,17 +1,17 @@
 {
-    "name": "creacoon/laravel-dashboard-gitlab-user-counts-tile",
+    "name": "creacoon/laravel-dashboard-gitlab-tile",
     "description": "GitLab Tile",
     "keywords": [
-        ":vendor",
-        ":package_name"
+        "Laravel",
+        "dashboard"
     ],
-    "homepage": "https://github.com/:vendor/:package_name",
+    "homepage": "https://github.com/creacoon/laravel-dashboard-gitlab-user-counts-tile.git",
     "license": "MIT",
     "authors": [
         {
-            "name": ":juliana",
+            "name": "Juliana Teixeira Chiabai",
             "email": ":julianachiabai@gmail.com",
-            "homepage": "https://:vendor.be",
+            "homepage": "https://gl.creacoon.nl",
             "role": "Developer"
         }
     ],
