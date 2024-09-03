@@ -10,7 +10,7 @@
                 <thead>
                 <tr>
                     @foreach(['', 'To-dos', 'MRs', 'Reviews'] as $header)
-                        <th scope="col" class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $header }}</th>
+                        <th scope="col" class="px-2 py-2 text-left text-base font-medium text-gray-500 uppercase tracking-wider">{{ $header }}</th>
                     @endforeach
                 </tr>
                 </thead>
@@ -23,15 +23,15 @@
                                     @if(isset($counts['avatar_url']))
                                         <img src="{{ $counts['avatar_url'] }}" alt="{{ $user }}" class="w-full h-full object-cover">
                                     @else
-                                        <span class="text-gray-500 text-xs">{{ strtoupper(substr($user, 0, 1)) }}</span>
+                                        <span class="text-gray-500 text-sm">{{ strtoupper(substr($user, 0, 1)) }}</span>
                                     @endif
                                 </div>
-                                <div class="font-medium text-gray-200 text-sm">{{ $user }}</div>
+                                <div class="font-medium text-gray-200 text-base">{{ $user }}</div>
                             </div>
                         </td>
-                        <td class="text-gray-200 px-2 py-2 whitespace-nowrap text-sm">{{ $counts['todos'] }}</td>
-                        <td class="text-gray-200 px-2 py-2 whitespace-nowrap text-sm">{{ $counts['assigned_merge_requests'] }}</td>
-                        <td class="text-gray-200 px-2 py-2 whitespace-nowrap text-sm">{{ $counts['review_requested_merge_requests'] }}</td>
+                        <td class="text-gray-200 px-2 py-2 whitespace-nowrap text-base">{{ $counts['todos'] }}</td>
+                        <td class="text-gray-200 px-2 py-2 whitespace-nowrap text-base">{{ $counts['assigned_merge_requests'] }}</td>
+                        <td class="text-gray-200 px-2 py-2 whitespace-nowrap text-base">{{ $counts['review_requested_merge_requests'] }}</td>
                     </tr>
                 @endforeach
                 </tbody>
