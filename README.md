@@ -1,26 +1,26 @@
 # laravel-dashboard-gitlab-user-counts-tile
----
-title: Time and Weather tile
-weight: 3
+
 ---
 
-This tile displays the time, weather, and optionally a rain forecast.
+title: GitLab User Counts Tile
 
-![screenshot](https://spatie.be/docs/laravel-dashboard/v2/images/time-weather.png)
+---
+
+This tile displays user counts from GitLab, including assigned merge requests, review requested merge requests, and todos.
+
+
 
 ## Installation
 
 You can install the tile via composer:
 
 ```bash
-composer require spatie/laravel-dashboard-time-weather-tile
+composer require spatie/laravel-dashboard-gitlab-user-counts-tile
 ```
 
 In the `dashboard` config file, you must add this configuration in the `tiles` key.
 
-Sign up at https://openweathermap.org/ to obtain `OPEN_WEATHER_MAP_KEY`
-
-Head to https://www.buienradar.nl/ to get your cities `BUIENRADAR_LATITUDE`and `BUIENRADAR_LONGITUDE`
+ Sign up at  your `Gitlab` instance to obtain GITLAB_API_TOKEN
 
 ```php
 // in config/dashboard.php
@@ -28,20 +28,20 @@ Head to https://www.buienradar.nl/ to get your cities `BUIENRADAR_LATITUDE`and `
 return [
     // ...
     'tiles' => [
-        'time_weather' => [
-            'open_weather_map_key' => env('OPEN_WEATHER_MAP_KEY'),
-            'open_weather_map_city' => 'Antwerp',
-            'units' => 'metric', // 'metric' or 'imperial' (metric is default)
-            'buienradar_latitude' => env('BUIENRADAR_LATITUDE'),
-            'buienradar_longitude' => env('BUIENRADAR_LONGITUDE'),
+        'gitlab' => [
+            'api_token' => env('GITLAB_API_TOKEN'),
+            'api_url' => env('GITLAB_API_URL', 'https://gitlab.example.com'),
+            'specific_users' => [
+                'user1',
+                'user2',
+                // Add more users as needed
+            ],
         ],
     ],
 ];
 ```
 
-In `app\Console\Kernel.php` you should schedule the `Spatie\TimeWeatherTile\FetchOpenWeatherMapDataCommand` to run every minute.
-
-If you want to rain forecast, and the Buienradar service supports your location, you can optionally schedule the `Spatie\TimeWeatherTile\FetchBuienradarForecastsCommand` too.
+In app\Console\Kernel.php you should schedule the Creacoon\GitLabTile\FetchDataFromGitLabUserCountsCommand to run at your desired interval.
 
 ```php
 // in app/console/Kernel.php
@@ -49,18 +49,17 @@ If you want to rain forecast, and the Buienradar service supports your location,
 protected function schedule(Schedule $schedule)
 {
     // ...
-    $schedule->command(\Spatie\TimeWeatherTile\Commands\FetchOpenWeatherMapDataCommand::class)->everyMinute();
-    $schedule->command(\Spatie\TimeWeatherTile\Commands\FetchBuienradarForecastsCommand::class)->everyMinute();
+    $schedule->command(\Creacoon\GitLabTile\FetchDataFromGitLabUserCountsCommand::class)->everyMinute();
 }
 ```
 
 ## Usage
 
-In your dashboard view you use the `livewire:time-weather-tile` component.
+In your dashboard view you use the `livewire:gitlab-user-counts-tile` component.
 
 ```html
 <x-dashboard>
-    <livewire:time-weather-tile position="a1" />
+    <livewire:gitlab-user-counts-tile position="a1" />
 </x-dashboard>
 ```
 
@@ -69,5 +68,4 @@ In your dashboard view you use the `livewire:time-weather-tile` component.
 If you want to customize the view used to render this tile, run this command:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\TimeWeatherTile\TimeWeatherTileServiceProvider" --tag="dashboard-time-weather-tile-views"
-```
+php artisan vendor:publish --provider="Creacoon\GitLabTile\GitLabUserCountsTileServiceProvider" --tag="dashboard-gitlab-user-counts-tile-views"```
