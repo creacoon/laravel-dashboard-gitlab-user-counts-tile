@@ -10,17 +10,16 @@ class FetchDataFromGitLabUserCountsCommand extends Command
     protected $signature = 'dashboard:fetch-data-from-gitlab-api';
     protected $description = 'Fetch data for GitLab tile';
 
-    protected $specificUsers = [];
-
     public function handle()
     {
-        $gitlabConfig = config('dashboard.tiles.gitlab');
-        $specificUsers = $gitlabConfig['specific_users'];
+        $specificUsers = config('dashboard.tiles.gitlab.specific_users');
+        $apiToken = config('dashboard.tiles.gitlab.api_token');
+        $apiUrl = config('dashboard.tiles.gitlab.api_url');
 
         foreach ($specificUsers as $username) {
             $userResponse = Http::withHeaders([
-                'PRIVATE-TOKEN' => $gitlabConfig['api_token'],
-            ])->get($gitlabConfig['api_url'] . "/api/v4/users?username={$username}");
+                'PRIVATE-TOKEN' => $apiToken,
+            ])->get($apiUrl . "/api/v4/users?username={$username}");
 
             if ($userResponse->successful()) {
                 $userData = $userResponse->json()[0] ?? null;
@@ -34,8 +33,8 @@ class FetchDataFromGitLabUserCountsCommand extends Command
                     ];
 
                     $userCountResponse = Http::withHeaders([
-                        'PRIVATE-TOKEN' => $gitlabConfig['api_token'],
-                    ])->get($gitlabConfig['api_url'] . "/api/v4/user_counts");
+                        'PRIVATE-TOKEN' => $apiToken,
+                    ])->get($apiUrl . "/api/v4/user_counts");
 
                     if ($userCountResponse->successful()) {
                         $userCountData = $userCountResponse->json();
