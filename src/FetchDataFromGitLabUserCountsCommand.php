@@ -10,6 +10,8 @@ class FetchDataFromGitLabUserCountsCommand extends Command
     protected $signature = 'dashboard:fetch-data-from-gitlab-api';
     protected $description = 'Fetch data for GitLab tile';
 
+    protected $specificUsers = [];
+
     public function handle()
     {
         $gitlabConfig = config('dashboard.tiles.gitlab');
