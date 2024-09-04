@@ -4,7 +4,7 @@ namespace Creacoon\GitLabTile;
 
 use Livewire\Component;
 
-class GitLabTileComponent extends Component
+class GitLabUserCountsTileComponent extends Component
 {
     public $position;
 
@@ -17,7 +17,7 @@ class GitLabTileComponent extends Component
     {
         return view('dashboard-gitlab-tile::tile', [
             'refreshIntervalInSeconds' => config('dashboard.tiles.gitlab.refresh_interval_in_seconds') ?? 60,
-            'userCounts' => GitLabStore::make()->getData(),
+            'userCounts' => GitLabUserCountsStore::make()->getData(),
         ]);
     }
 }

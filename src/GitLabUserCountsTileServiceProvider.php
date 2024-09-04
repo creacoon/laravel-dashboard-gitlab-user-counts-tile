@@ -5,13 +5,13 @@ namespace Creacoon\GitLabTile;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 
-class GitLabTileServiceProvider extends ServiceProvider
+class GitLabUserCountsTileServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                FetchDataFromApiCommand::class,
+                FetchDataFromGitLabUserCountsCommand::class,
             ]);
         }
 
@@ -21,6 +21,6 @@ class GitLabTileServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'dashboard-gitlab-tile');
 
-        Livewire::component('git-lab-tile', GitLabTileComponent::class);
+        Livewire::component('git-lab-tile', GitLabUserCountsTileComponent::class);
     }
 }

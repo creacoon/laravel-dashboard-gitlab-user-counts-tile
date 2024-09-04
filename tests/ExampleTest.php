@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\MyTile\Tests;
+namespace Creacoon\GitLabTile\Tests;
 
 use PHPUnit\Framework\TestCase;
 

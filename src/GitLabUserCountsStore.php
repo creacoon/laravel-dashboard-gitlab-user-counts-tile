@@ -4,7 +4,7 @@ namespace Creacoon\GitLabTile;
 
 use Spatie\Dashboard\Models\Tile;
 
-class GitLabStore
+class GitLabUserCountsStore
 {
     private Tile $tile;
 

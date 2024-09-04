@@ -9,7 +9,7 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Juliana Teixeira Chiabai",
+            "name": "Juliana Chiabai",
             "email": ":julianachiabai@gmail.com",
             "homepage": "https://gl.creacoon.nl",
             "role": "Developer"
@@ -44,7 +44,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Creacoon\\GitLabTile\\GitLabTileServiceProvider"
+                "GitLabUserCountsTileServiceProvider"
             ]
         }
     },
