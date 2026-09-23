@@ -5,7 +5,7 @@
                 GitLab User Counts
             </div>
         </div>
-        <div wire:poll.{{ $refreshIntervalInSeconds }}s class="flex-grow">
+        <div wire:poll.{{ $refreshIntervalInSeconds }}s class="grow">
             <table class="w-full">
                 <thead>
                 <tr>
