@@ -31,11 +31,13 @@ return [
         'gitlab' => [
             'api_token' => env('GITLAB_API_TOKEN'),
             'api_url' => env('GITLAB_API_URL', 'https://gitlab.com'),
-            'specific_users' => explode(',', env('GITLAB_SPECIFIC_USERS')),
+            'specific_users' => array_filter(explode(',', env('GITLAB_SPECIFIC_USERS', ''))),
         ],
     ],
 ];
 ```
+
+When `specific_users` is empty, the tile shows all active users that have at least one to-do, assigned merge request or review requested merge request. Blocked or deactivated users are never shown, even when listed in `specific_users`.
 
 In app\Console\Kernel.php you should schedule the Creacoon\GitLabTile\FetchDataFromGitLabUserCountsCommand to run at your desired interval.
 
