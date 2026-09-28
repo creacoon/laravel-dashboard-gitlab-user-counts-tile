@@ -1,41 +1,45 @@
 <x-dashboard-tile :position="$position" :refresh-interval="$refreshIntervalInSeconds">
-    <div class="p-4 h-full flex flex-col">
-        <div class="flex items-center justify-center mb-4">
-            <div class="font-medium text-dimmed text-sm uppercase tracking-wide tabular-nums">
-                GitLab User Counts
+    <div class="grid grid-rows-auto-1 gap-3 h-full">
+        <div class="grid grid-cols-[1fr_repeat(3,5rem)] items-center gap-2 pr-3">
+            <div class="font-medium text-dimmed text-sm uppercase tracking-wide">
+                GitLab
             </div>
+            @foreach(['To-dos', 'MRs', 'Reviews'] as $header)
+                <div class="text-right text-xs font-medium uppercase tracking-wide text-dimmed">{{ $header }}</div>
+            @endforeach
         </div>
-        <div wire:poll.{{ $refreshIntervalInSeconds }}s class="grow">
-            <table class="w-full">
-                <thead>
-                <tr>
-                    @foreach(['', 'To-dos', 'MRs', 'Reviews'] as $header)
-                        <th scope="col" class="px-2 py-2 text-left text-base font-medium text-gray-100 uppercase tracking-wider">{{ $header }}</th>
-                    @endforeach
-                </tr>
-                </thead>
-                <tbody>
+
+        @if(empty($userCounts))
+            <div class="flex items-center justify-center text-dimmed text-sm">
+                No open items
+            </div>
+        @else
+            <div class="flex flex-col gap-2">
                 @foreach($userCounts as $user => $counts)
-                    <tr class="bg-transparent">
-                        <td class="px-2 py-2 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center mr-2 overflow-hidden">
-                                    @if(isset($counts['avatar_url']))
-                                        <img src="{{ $counts['avatar_url'] }}" alt="{{ $counts['name'] ?? strtoupper(substr($user, 0, 1)) }}" class="w-full h-full object-cover">
-                                    @else
-                                        <span class="text-gray-500 text-sm">{{ strtoupper(substr($counts['name'] ?? $user, 0, 1)) }}</span>
-                                    @endif
+                    <div class="grid grid-cols-[1fr_repeat(3,5rem)] items-center gap-2 rounded-xl border border-white/5 bg-white/[0.04] px-3 py-2.5 text-base">
+                        <div class="flex min-w-0 items-center gap-3">
+                            @if(isset($counts['avatar_url']))
+                                <img src="{{ $counts['avatar_url'] }}" alt="{{ $counts['name'] ?? $user }}" class="size-8 shrink-0 rounded-full object-cover ring-2 ring-white/10">
+                            @else
+                                <div class="flex size-8 shrink-0 items-center justify-center rounded-full bg-amber-500 text-sm font-semibold text-white ring-2 ring-white/10">
+                                    {{ strtoupper(substr($counts['name'] ?? $user, 0, 1)) }}
                                 </div>
-                                <div class="font-medium text-gray-200 text-base">{{ $counts['name'] ?? strtoupper(substr($user, 0, 1)) }}</div>
+                            @endif
+                            <span class="truncate font-medium text-default">{{ $counts['name'] ?? $user }}</span>
+                        </div>
+
+                        @foreach(['todos', 'assigned_merge_requests', 'review_requested_merge_requests'] as $countKey)
+                            <div @class([
+                                'text-right font-semibold tabular-nums',
+                                'text-default' => $counts[$countKey] > 0,
+                                'text-dimmed opacity-50' => $counts[$countKey] === 0,
+                            ])>
+                                {{ $counts[$countKey] }}
                             </div>
-                        </td>
-                        <td class="text-gray-200 px-2 py-2 whitespace-nowrap text-base">{{ $counts['todos'] }}</td>
-                        <td class="text-gray-200 px-2 py-2 whitespace-nowrap text-base">{{ $counts['assigned_merge_requests'] }}</td>
-                        <td class="text-gray-200 px-2 py-2 whitespace-nowrap text-base">{{ $counts['review_requested_merge_requests'] }}</td>
-                    </tr>
+                        @endforeach
+                    </div>
                 @endforeach
-                </tbody>
-            </table>
-        </div>
+            </div>
+        @endif
     </div>
 </x-dashboard-tile>
